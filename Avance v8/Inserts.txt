@@ -1,0 +1,32 @@
+INSERT INTO `distrito` (`nom_distrito`) VALUES
+('San Isidro'),
+('San Miguel'),
+('Pueblo Libre'),
+('Jesus maría'),
+('Lince');
+
+////////////////////////////////////////
+
+INSERT INTO `genero` (`nom_genero`) VALUES
+('Maculino'),
+('Femenino');
+
+////////////////////////////////////////
+
+INSERT INTO `rol` (`nom_rol`, `desc_rol`) VALUES
+('Usuario', 'Recibe el servicio'),
+('Especialista', 'Brinda el servicio'),
+('Administrador', 'Gestión de la app');
+
+////////////////////////////////////////
+
+INSERT INTO `especialidad` (`nom_especialidad`, `desc_espec`) VALUES
+('Gasfitero', 'Servicio de Gasfiteria'),
+('Albañil', 'Servicio de Albañilería'),
+('Electricista', 'Servicio Electrico'),
+('Pintor', 'Servicio de Pintura'),
+('Carpintero', 'Servicio de Carpinteria');
+
+////////////////////////////////////////
+
+
