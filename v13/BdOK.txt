@@ -1,0 +1,359 @@
+-- -----------------------------------------------------
+-- Schema 3385092_servicio
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `3396975_miloficios2020` DEFAULT CHARACTER SET latin1 ;
+USE `3396975_miloficios2020` ;
+
+
+-- -----------------------------------------------------
+-- Table `3396975_miloficios2020`.`genero`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `3396975_miloficios2020`.`genero` (
+  `id_genero` INT NOT NULL AUTO_INCREMENT,
+  `nom_genero` VARCHAR(50) NULL,
+   PRIMARY KEY (`id_genero`))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `3396975_miloficios2020`.`distrito`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `3396975_miloficios2020`.`distrito` (
+  `id_distrito` INT NOT NULL AUTO_INCREMENT,
+  `nom_distrito` VARCHAR(50) NULL,
+   PRIMARY KEY (`id_distrito`))
+ENGINE = InnoDB;
+
+////////////////////////////////////////////////////////////////
+
+-- -----------------------------------------------------
+-- Table `3396975_miloficios2020`.`usuario_tec`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `3396975_miloficios2020`.`usuario_tec` (
+  `id_usuario_tec` INT NOT NULL AUTO_INCREMENT,
+  `nom_usuario_tec` VARCHAR(50) NULL,
+  `ape_usuario_tec` VARCHAR(50) NULL,
+  `id_genero` INT NOT NULL,
+  `correo_usuario_tec` VARCHAR(256) NULL,
+  `contraseña_usuario_tec` VARCHAR(50) NOT NULL,
+  `dni_usuario_tec` VARCHAR(8) NOT NULL,
+  `id_distrito` INT NOT NULL,
+  `direccion_usuario_tec` VARCHAR(20) NULL,
+  `tel_usuario_tec` INT(10) NOT NULL,
+  `rkg_usuario_tec` DECIMAL(10,2) NULL,
+  `nom_rol` VARCHAR(50) NOT NULL,
+  `imagen_usuario_tec` VARCHAR(20) NULL,
+
+   PRIMARY KEY (`id_usuario_tec`),
+   INDEX `fk_distrito1_idx` (`id_distrito` ASC),
+   INDEX `fk_genero1_idx` (`id_genero` ASC),
+   INDEX `fk_rol_1_idx` (`nom_rol` ASC),
+   CONSTRAINT `fk_distrito1`
+    FOREIGN KEY (`id_distrito`)
+    REFERENCES `3396975_miloficios2020`.`distrito` (`id_distrito`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+   CONSTRAINT `fk_rol_1_idx`
+    FOREIGN KEY (`nom_rol`)
+    REFERENCES `3396975_miloficios2020`.`rol` (`nom_rol`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+
+   CONSTRAINT `fk_genero1`
+    FOREIGN KEY (`id_genero`)
+    REFERENCES `3396975_miloficios2020`.`genero` (`id_genero`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+
+ENGINE = InnoDB;
+
+
+////////////////////////////////////////////////////////////////
+
+
+-- -----------------------------------------------------
+-- Table `3396975_miloficios2020`.`especialidad`
+-- -----------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `3396975_miloficios2020`.`especialidad` (
+  `nom_especialidad` VARCHAR(50) NOT NULL,
+  `desc_espec` VARCHAR(50) NULL,
+   PRIMARY KEY (`nom_especialidad`))
+ ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `3396975_miloficios2020`.`espec_usuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `3396975_miloficios2020`.`espec_usuario` (
+  `nom_especialidad` VARCHAR(50) NOT NULL,
+  `id_usuario_tec` INT NOT NULL,
+
+  PRIMARY KEY (`nom_especialidad`,`id_usuario_tec`),
+  INDEX `fk_especialidad_idx` (`id_usuario_tec` ASC),
+  INDEX `fk_especialidad1` (`nom_especialidad` ASC),
+   CONSTRAINT `fk_especialidad_idx`
+    FOREIGN KEY (`id_usuario_tec`)
+    REFERENCES `3396975_miloficios2020`.`usuario_tec` (`id_usuario_tec`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_especialidad1`
+    FOREIGN KEY (`nom_especialidad`)
+    REFERENCES `3396975_miloficios2020`.`especialidad` (`nom_especialidad`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+ 
+
+
+
+
+
+
+-- -----------------------------------------------------
+-- Table `3396975_miloficios2020`.`rol`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `3396975_miloficios2020`.`rol` (
+  `nom_rol` VARCHAR(50) NOT NULL,
+  `desc_rol` VARCHAR(50) NULL,
+   PRIMARY KEY (`nom_rol`))
+ ENGINE = InnoDB;
+
+
+
+
+
+-- -----------------------------------------------------
+-- Table `3396975_miloficios2020`.`rol_usuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `3396975_miloficios2020`.`rol_usuario` (
+  `nom_rol` VARCHAR(50) NOT NULL,
+  `id_usuario` INT NOT NULL,
+
+  PRIMARY KEY (`nom_rol`,`id_usuario`),
+  INDEX `fk_usuario_rol_rol1_idx` (`id_usuario` ASC),
+  INDEX `fk_usuario_rol_rol1` (`nom_rol` ASC),
+   CONSTRAINT `fk_usuario_rol_rol1_idx`
+    FOREIGN KEY (`id_usuario_tec`)
+    REFERENCES `3396975_miloficios2020`.`usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_usuario_rol_rol1`
+    FOREIGN KEY (`nom_rol`)
+    REFERENCES `3396975_miloficios2020`.`rol` (`nom_rol`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+ 
+/////////////////////////////////////////////////////////////////////////////
+
+-- -----------------------------------------------------
+-- Table `3396975_miloficios2020`.`usuario`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `3396975_miloficios2020`.`usuario` (
+  `id_usuario` INT NOT NULL AUTO_INCREMENT,
+  `nom_usuario` VARCHAR(50) NULL,
+  `ape_usuario` VARCHAR(50) NULL,
+  `id_genero` INT NOT NULL,
+  `correo_usuario` VARCHAR(256) NULL,
+  `contraseña_usuario` VARCHAR(50) NOT NULL,
+  `dni_usuario` VARCHAR(8) NOT NULL,
+  `id_distrito` INT NOT NULL,
+  `direccion_usuario` VARCHAR(20) NULL,
+  `tel_usuario` INT(10) NOT NULL,
+  `nom_rol` VARCHAR(50) NOT NULL,
+  `imagen_usuario` VARCHAR(20) NULL,
+
+
+   PRIMARY KEY (`id_usuario`),
+   INDEX `fk_distritou1_idx` (`id_distrito` ASC),
+   INDEX `fk_generou1_idx` (`id_genero` ASC),
+   INDEX `fk_rol_u1_idx` (`nom_rol` ASC),
+
+   CONSTRAINT `fk_distritou1_idx`
+    FOREIGN KEY (`id_distrito`)
+    REFERENCES `3396975_miloficios2020`.`distrito` (`id_distrito`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+
+   CONSTRAINT `fk_rol_u1_idx`
+    FOREIGN KEY (`nom_rol`)
+    REFERENCES `3396975_miloficios2020`.`rol` (`nom_rol`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+
+
+   CONSTRAINT `fk_generou1_idx`
+    FOREIGN KEY (`id_genero`)
+    REFERENCES `3396975_miloficios2020`.`genero` (`id_genero`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `3385092_servicio`.`detalle_servicio`
+-- -----------------------------------------------------
+
+
+CREATE TABLE IF NOT EXISTS `3396975_miloficios2020`.`det_serv` (
+  `id_detalle_servicio` INT NOT NULL AUTO_INCREMENT,
+  `id_usuario_tec` INT NOT NULL,
+  `id_usuario` INT NOT NULL,
+  `nom_especialidad` VARCHAR(50) NOT NULL,
+  `id_distrito` INT NOT NULL,
+  `fecha_inicio` DATETIME NULL,
+  `cali_serv` INT(10) NOT NULL,
+  
+  PRIMARY KEY (`id_detalle_servicio`, `id_usuario_tec`, `id_usuario`,`nom_especialidad`,`id_distrito`),
+  INDEX `fk_detalle_tecnico1_idx` (`id_usuario_tec` ASC),
+  INDEX `fk_detalle_usuario1_idx` (`id_usuario` ASC),
+  INDEX `fk_detalle_especialidad1_idx` (`nom_especialidad` ASC),
+  INDEX `fk_detalle_distrito1_idx` (`id_distrito` ASC),
+    
+  CONSTRAINT `fk_detalle_tecnico1_idx`
+    FOREIGN KEY (`id_usuario_tec`)
+    REFERENCES `3396975_miloficios2020`.`usuario_tec` (`id_usuario_tec`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_detalle_usuario1_idx`
+    FOREIGN KEY (`id_usuario`)
+    REFERENCES `3396975_miloficios2020`.`usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_detalle_especialidad1_idx`
+    FOREIGN KEY (`nom_especialidad`)
+    REFERENCES `3396975_miloficios2020`.`especialidad` (`nom_especialidad`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_detalle_distrito1_idx`
+    FOREIGN KEY (`id_distrito`)
+    REFERENCES `3396975_miloficios2020`.`distrito` (`id_distrito`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)    
+    
+    
+    
+ ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `3385092_servicio`.`aviso`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `3396975_miloficios2020`.`aviso` (
+  `id_aviso` INT NOT NULL AUTO_INCREMENT,
+  `titulo` VARCHAR(64) NULL,
+  `id_usuario_tec` INT NOT NULL,
+  `id_usuario` INT NOT NULL,
+  `nom_especialidad` VARCHAR(50) NOT NULL,
+  `id_distrito` INT NOT NULL,
+
+
+  PRIMARY KEY (`id_aviso`, `id_usuario_tec`, `id_usuario`,`nom_especialidad`,`id_distrito`),
+  INDEX `fk_av_tecnico1_idx` (`id_usuario_tec` ASC),
+  INDEX `fk_av_usuario1_idx` (`id_usuario` ASC),
+  INDEX `fk_av_especialidad1_idx` (`nom_especialidad` ASC),
+  INDEX `fk_av_distrito1_idx` (`id_distrito` ASC),
+    
+  CONSTRAINT `fk_av_tecnico1_idx`
+    FOREIGN KEY (`id_usuario_tec`)
+    REFERENCES `3396975_miloficios2020`.`usuario_tec` (`id_usuario_tec`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_av_usuario1_idx`
+    FOREIGN KEY (`id_usuario`)
+    REFERENCES `3396975_miloficios2020`.`usuario` (`id_usuario`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_av_especialidad1_idx`
+    FOREIGN KEY (`nom_especialidad`)
+    REFERENCES `3396975_miloficios2020`.`especialidad` (`nom_especialidad`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_av_distrito1_idx`
+    FOREIGN KEY (`id_distrito`)
+    REFERENCES `3396975_miloficios2020`.`distrito` (`id_distrito`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)  
+ ENGINE = InnoDB;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
